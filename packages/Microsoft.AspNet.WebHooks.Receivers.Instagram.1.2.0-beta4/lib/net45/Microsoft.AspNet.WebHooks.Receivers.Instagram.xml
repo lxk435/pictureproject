@@ -1,0 +1,537 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.AspNet.WebHooks.Receivers.Instagram</name>
+    </assembly>
+    <members>
+        <member name="T:System.Web.Http.HttpConfigurationExtensions">
+            <summary>
+            Extension methods for <see cref="T:System.Web.Http.HttpConfiguration"/>.
+            </summary>
+        </member>
+        <member name="M:System.Web.Http.HttpConfigurationExtensions.InitializeReceiveInstagramWebHooks(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Initializes support for receiving Instagram WebHooks.
+            Set the '<c>MS_WebHookReceiverSecret_Instagram</c>' application setting to the application secrets, optionally using IDs
+            to differentiate between multiple WebHooks, for example '<c>secret0, id1=secret1, id2=secret2</c>'.
+            The corresponding WebHook URI is of the form '<c>https://&lt;host&gt;/api/webhooks/incoming/instagram/{id}</c>'.
+            For details about Instagram WebHooks, see <c>https://instagram.com/developer/realtime/</c>.
+            </summary>
+            <param name="config">The current <see cref="T:System.Web.Http.HttpConfiguration"/>config.</param>
+        </member>
+        <member name="T:System.Web.Http.InstagramWebHookClientExtensions">
+            <summary>
+            Provides various extensions for the <see cref="T:Microsoft.AspNet.WebHooks.InstagramWebHookClient"/> class.
+            </summary>
+        </member>
+        <member name="M:System.Web.Http.InstagramWebHookClientExtensions.SubscribeAsync(Microsoft.AspNet.WebHooks.InstagramWebHookClient,System.String,System.Web.Http.Routing.UrlHelper)">
+            <summary>
+            Subscribes to posts submitted by all users authenticated with this Instagram client.
+            </summary>
+            <param name="client">The current <see cref="T:Microsoft.AspNet.WebHooks.InstagramWebHookClient"/> instance.</param>
+            <param name="id">A (potentially empty) ID of a particular configuration for this WebHook. This makes it possible to 
+            support multiple WebHooks with individual configurations.</param>
+            <param name="urlHelper">A <see cref="T:System.Web.Http.Routing.UrlHelper"/> for computing the callback URI.</param>
+            <returns>A <see cref="T:Microsoft.AspNet.WebHooks.InstagramSubscription"/> instance.</returns>
+        </member>
+        <member name="M:System.Web.Http.InstagramWebHookClientExtensions.SubscribeAsync(Microsoft.AspNet.WebHooks.InstagramWebHookClient,System.String,System.Web.Http.Routing.UrlHelper,System.String)">
+            <summary>
+            Subscribes to a particular tag. For example, For instance, a subscription for the tag <c>'nofilter</c>
+            will receive event notifications every time anyone posts a new photo with the tag <c>'#nofilter'</c>.
+            </summary>
+            <param name="client">The current <see cref="T:Microsoft.AspNet.WebHooks.InstagramWebHookClient"/> instance.</param>
+            <param name="id">A (potentially empty) ID of a particular configuration for this WebHook. This makes it possible to 
+            support multiple WebHooks with individual configurations.</param>
+            <param name="urlHelper">A <see cref="T:System.Web.Http.Routing.UrlHelper"/> for computing the callback URI.</param>
+            <param name="tag">The tag to subscribe to (without a leading '#')</param>
+            <returns>A <see cref="T:Microsoft.AspNet.WebHooks.InstagramSubscription"/> instance.</returns>
+        </member>
+        <member name="M:System.Web.Http.InstagramWebHookClientExtensions.SubscribeAsync(Microsoft.AspNet.WebHooks.InstagramWebHookClient,System.String,System.Web.Http.Routing.UrlHelper,System.Double,System.Double,System.Int32)">
+            <summary>
+            Subscribes to a geographic area identified by a center latitude and longitude and a radius extending from the center. 
+            </summary>
+            <param name="client">The current <see cref="T:Microsoft.AspNet.WebHooks.InstagramWebHookClient"/> instance.</param>
+            <param name="id">A (potentially empty) ID of a particular configuration for this WebHook. This makes it possible to 
+            support multiple WebHooks with individual configurations.</param>
+            <param name="urlHelper">A <see cref="T:System.Web.Http.Routing.UrlHelper"/> for computing the callback URI.</param>
+            <param name="latitude">The center latitude of the geo-area to subscribe to.</param>
+            <param name="longitude">The center longitude of the geo-area to subscribe to.</param>
+            <param name="radius">The radius of the geo-area in meters between 0 and 5000.</param>
+            <returns>A <see cref="T:Microsoft.AspNet.WebHooks.InstagramSubscription"/> instance.</returns>
+        </member>
+        <member name="T:Microsoft.AspNet.WebHooks.Properties.InstagramReceiverResources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.Properties.InstagramReceiverResources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.Properties.InstagramReceiverResources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.Properties.InstagramReceiverResources.Client_GeoFailure">
+            <summary>
+              Looks up a localized string similar to Could not retrieve Instagram media for geo ID &apos;{0}&apos;. Received status code &apos;{1}&apos; and error message &apos;{2}&apos;..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.Properties.InstagramReceiverResources.Client_GetSubscriptionsFailure">
+            <summary>
+              Looks up a localized string similar to Could not get current Instagram subscriptions. Received status code &apos;{0}&apos; and error message &quot;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.Properties.InstagramReceiverResources.Client_NoHttps">
+            <summary>
+              Looks up a localized string similar to The WebHook callback must be an absolute URI and requires HTTPS in order to be secure. Please use a WebHook callback URI of type &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.Properties.InstagramReceiverResources.Client_NotAbsoluteCallback">
+            <summary>
+              Looks up a localized string similar to The URI for where Instagram will send WebHook requests must be an absolute URI. By default this should be of the form &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.Properties.InstagramReceiverResources.Client_SubscribeFailure">
+            <summary>
+              Looks up a localized string similar to Could not create Instagram subscription. Received status code &apos;{0}&apos; and error message &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.Properties.InstagramReceiverResources.Client_UnsubscribeFailure">
+            <summary>
+              Looks up a localized string similar to Could not delete Instagram subscriptions. Received status code &apos;{0}&apos; and error message &quot;{1}&quot;..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.Properties.InstagramReceiverResources.DateTime_BadFormat">
+            <summary>
+              Looks up a localized string similar to Cannot read value &apos;{0}&apos; as type &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.Properties.InstagramReceiverResources.DateTime_NullError">
+            <summary>
+              Looks up a localized string similar to Cannot convert null value to type &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.Properties.InstagramReceiverResources.Receiver_BadEvent">
+            <summary>
+              Looks up a localized string similar to Could not parse WebHook data: {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.Properties.InstagramReceiverResources.Receiver_BadHeaderEncoding">
+            <summary>
+              Looks up a localized string similar to The &apos;{0}&apos; header value is invalid. It must be a valid base64-encoded string..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.Properties.InstagramReceiverResources.Receiver_BadSecret">
+            <summary>
+              Looks up a localized string similar to Could not find a valid configuration for WebHook receiver &apos;{0}&apos; and instance &apos;{1}&apos;. The setting must be set to a value between {2} and {3} characters long..
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.Properties.InstagramReceiverResources.Receiver_NoChallenge">
+            <summary>
+              Looks up a localized string similar to The WebHook verification request must contain a &apos;{0}&apos; query parameter which will get echoed back in a successful response..
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNet.WebHooks.Serialization.InstagramUnixTimeConverter">
+            <summary>
+            Converts the Instagram string representation of a Unix time stamp to and from a <see cref="T:System.DateTime"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNet.WebHooks.Serialization.InstagramUnixTimeConverter.WriteJson(Newtonsoft.Json.JsonWriter,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AspNet.WebHooks.Serialization.InstagramUnixTimeConverter.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AspNet.WebHooks.InstagramCaption">
+            <summary>
+            Contains information about a media caption from Instagram.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramCaption.Id">
+            <summary>
+            Gets or sets the ID of this caption.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramCaption.CreatedTime">
+            <summary>
+            Gets or sets the creation time for this caption.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramCaption.Text">
+            <summary>
+            Gets or sets the text of this caption.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramCaption.From">
+            <summary>
+            Gets or sets the <see cref="T:Microsoft.AspNet.WebHooks.InstagramUser"/> that this caption is from.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNet.WebHooks.InstagramLocation">
+            <summary>
+            Contains information about the location where the media uploaded to Instagram was recorded.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramLocation.Id">
+            <summary>
+            Gets or sets the ID of the location.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramLocation.Name">
+            <summary>
+            Gets or sets the name of the location.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramLocation.Latitude">
+            <summary>
+            Gets or sets the latitude of the location.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramLocation.Longitude">
+            <summary>
+            Gets or sets the latitude of the location.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNet.WebHooks.InstagramImages">
+            <summary>
+            Contains information about images contained in an Instagram post.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramImages.Thumbnail">
+            <summary>
+            Gets or sets a thumbnail of the media.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramImages.LowResolution">
+            <summary>
+            Gets or sets a low resolution version of the media.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramImages.StandardResolution">
+            <summary>
+            Gets or sets a standard resolution version of the media.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNet.WebHooks.InstagramVideos">
+            <summary>
+            Contains information about videos contained in an Instagram post.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramVideos.LowBandwidth">
+            <summary>
+            Gets or sets a low bandwidth version of the media.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramVideos.LowResolution">
+            <summary>
+            Gets or sets a low resolution version of the media.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramVideos.StandardResolution">
+            <summary>
+            Gets or sets a standard resolution version of the media.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNet.WebHooks.InstagramPost">
+            <summary>
+            Contains the top-level entry for media posted to Instagram
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramPost.Id">
+            <summary>
+            Gets or sets a unique ID for this post.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramPost.Link">
+            <summary>
+            Gets or sets a direct link to the media in this post.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramPost.CreatedTime">
+            <summary>
+            Gets or sets the data and time when this post was created.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramPost.MediaType">
+            <summary>
+            Gets or sets information about the type of media included in this post.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramPost.Tags">
+            <summary>
+            Gets the tags included in this post.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramPost.Location">
+            <summary>
+            Gets or sets the location of the poster.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramPost.Images">
+            <summary>
+            Gets or sets information about any images included in this post.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramPost.Videos">
+            <summary>
+            Gets or sets information about any videos included in this post.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramPost.Caption">
+            <summary>
+            Gets or sets information about the caption included in this post.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramPost.User">
+            <summary>
+            Gets or sets information about the user posting the media.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNet.WebHooks.InstagramMedia">
+            <summary>
+            Contains information about the size and address of the media uploaded to Instagram.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramMedia.Address">
+            <summary>
+            Gets or sets the URI of the media.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramMedia.Width">
+            <summary>
+            Gets or sets the width of the media in pixels.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramMedia.Height">
+            <summary>
+            Gets or sets the height of the media in pixels.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNet.WebHooks.InstagramNotificationCollection">
+            <summary>
+            Describes a collection of Instagram WebHook event notifications as received from Instagram.
+            For details about Instagram WebHooks, please see <c>https://instagram.com/developer/realtime/</c>.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNet.WebHooks.InstagramNotification">
+            <summary>
+            Describes an Instagram WebHook event notification. For details about Instagram WebHooks, please 
+            see <c>https://instagram.com/developer/realtime/</c>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramNotification.Object">
+            <summary>
+            Gets or sets the object type for this subscription. The basic types provided by Instagram
+            are 'user', 'tag', 'location', and 'geography'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramNotification.ObjectId">
+            <summary>
+            Gets or sets an additional parameter for this subscription depending on whether it is a user,
+            tag, location, or geography-based subscription. 
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramNotification.SubscriptionId">
+            <summary>
+            Gets or sets the subscription ID.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNet.WebHooks.InstagramSubscription">
+            <summary>
+            Describes an Instagram WebHook subscription. For details about Instagram WebHooks, please 
+            see <c>https://instagram.com/developer/realtime/</c>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramSubscription.Id">
+            <summary>
+            Gets or sets the subscription ID.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramSubscription.Object">
+            <summary>
+            Gets or sets the object type for this subscription. The basic types provided by Instagram
+            are 'user', 'tag', 'location', and 'geography'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramSubscription.ObjectId">
+            <summary>
+            Gets or sets an additional parameter for this subscription depending on whether it is a user,
+            tag, location, or geography-based subscription. For instance, if you create a subscription for 
+            the tag '<c>nofilter</c>', you will will receive an event notification every time anyone posts 
+            a new photo with the tag '<c>#nofilter</c>'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramSubscription.Callback">
+            <summary>
+            Gets or sets the callback URI where event notifications are sent.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNet.WebHooks.InstagramUser">
+            <summary>
+            Contains information about an Instagram user.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramUser.Id">
+            <summary>
+            Gets or sets the ID for this user.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramUser.UserName">
+            <summary>
+            Gets or sets the user name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramUser.FullName">
+            <summary>
+            Gets or sets the full name of this user.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramUser.ProfilePicture">
+            <summary>
+            Gets or sets the profile picture for this user.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNet.WebHooks.InstagramWebHookClient">
+            <summary>
+            The <see cref="T:Microsoft.AspNet.WebHooks.InstagramWebHookClient"/> provides support for managing Instagram WebHook subscriptions programmatically.
+            For more information about Instagram WebHooks, please see <c>https://instagram.com/developer/realtime/</c>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNet.WebHooks.InstagramWebHookClient.#ctor(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AspNet.WebHooks.InstagramWebHookClient"/> which can be used to create and delete WebHooks
+            with Instagram. For more information about Instagram WebHooks, please see <c>https://instagram.com/developer/realtime/</c>.
+            Set the application settings '<c>MS_WebHookReceiverSecret_Instagram</c>' and '<c>MS_WebHookReceiverSecret_InstagramId</c>' to 
+            the Instagram client ID and secret respectively, optionally using the 'id' syntax to accommodate multiple configurations 
+            using the same model as for receivers.
+            </summary>
+            <param name="config">The current <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+        </member>
+        <member name="M:Microsoft.AspNet.WebHooks.InstagramWebHookClient.#ctor(System.Web.Http.HttpConfiguration,System.Net.Http.HttpClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.AspNet.WebHooks.InstagramWebHookClient"/> with the given <paramref name="httpClient"/>. 
+            This constructor is intended for unit testing purposes.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNet.WebHooks.InstagramWebHookClient.GetAllSubscriptionsAsync(System.String)">
+            <summary>
+            Gets the current set of subscriptions for the given client.
+            </summary>
+            <param name="id">A (potentially empty) ID of a particular configuration for this WebHook. This makes it possible to 
+            support multiple WebHooks with individual configurations.</param>
+        </member>
+        <member name="M:Microsoft.AspNet.WebHooks.InstagramWebHookClient.SubscribeAsync(System.String,System.Uri)">
+            <summary>
+            Subscribes to posts submitted by all users authenticated with this Instagram client.
+            </summary>
+            <param name="id">A (potentially empty) ID of a particular configuration for this WebHook. This makes it possible to 
+            support multiple WebHooks with individual configurations.</param>
+            <param name="callback">The URI where WebHooks for the given subscription will be received. Typically this will 
+            be of the form <c>https://&lt;host&gt;/api/webhooks/incoming/instagram/{id}</c>.</param>
+            <returns>A <see cref="T:Microsoft.AspNet.WebHooks.InstagramSubscription"/> instance.</returns>
+        </member>
+        <member name="M:Microsoft.AspNet.WebHooks.InstagramWebHookClient.SubscribeAsync(System.String,System.Uri,System.String)">
+            <summary>
+            Subscribes to a particular tag. For example, For instance, a subscription for the tag <c>'nofilter</c>
+            will receive event notifications every time anyone posts a new photo with the tag <c>'#nofilter'</c>.
+            </summary>
+            <param name="id">A (potentially empty) ID of a particular configuration for this WebHook. This makes it possible to 
+            support multiple WebHooks with individual configurations.</param>
+            <param name="callback">The URI where WebHooks for the given subscription will be received. Typically this will 
+            be of the form <c>https://&lt;host&gt;/api/webhooks/incoming/instagram/{id}</c>.</param>
+            <param name="tag">The tag to subscribe to (without a leading '#')</param>
+            <returns>A <see cref="T:Microsoft.AspNet.WebHooks.InstagramSubscription"/> instance.</returns>
+        </member>
+        <member name="M:Microsoft.AspNet.WebHooks.InstagramWebHookClient.SubscribeAsync(System.String,System.Uri,System.Double,System.Double,System.Int32)">
+            <summary>
+            Subscribes to a geographic area identified by a center latitude and longitude and a radius extending from the center. 
+            </summary>
+            <param name="id">A (potentially empty) ID of a particular configuration for this WebHook. This makes it possible to 
+            support multiple WebHooks with individual configurations.</param>
+            <param name="callback">The URI where WebHooks for the given subscription will be received. Typically this will 
+            be of the form <c>https://&lt;host&gt;/api/webhooks/incoming/instagram/{id}</c>.</param>
+            <param name="latitude">The center latitude of the geo-area to subscribe to.</param>
+            <param name="longitude">The center longitude of the geo-area to subscribe to.</param>
+            <param name="radius">The radius of the geo-area in meters between 0 and 5000.</param>
+            <returns>A <see cref="T:Microsoft.AspNet.WebHooks.InstagramSubscription"/> instance.</returns>
+        </member>
+        <member name="M:Microsoft.AspNet.WebHooks.InstagramWebHookClient.UnsubscribeAsync(System.String)">
+            <summary>
+            Deletes all active subscriptions for this client.
+            </summary>
+            <param name="id">A (potentially empty) ID of a particular configuration for this WebHook. This makes it possible to 
+            support multiple WebHooks with individual configurations.</param>
+        </member>
+        <member name="M:Microsoft.AspNet.WebHooks.InstagramWebHookClient.UnsubscribeAsync(System.String,System.String)">
+            <summary>
+            Deletes the subscription with the given <paramref name="subscriptionId"/>.
+            </summary>
+            <param name="id">A (potentially empty) ID of a particular configuration for this WebHook. This makes it possible to 
+            support multiple WebHooks with individual configurations.</param>
+            <param name="subscriptionId">The ID of the subscription to delete.</param>
+        </member>
+        <member name="M:Microsoft.AspNet.WebHooks.InstagramWebHookClient.GetRecentGeoMedia(System.String,System.String)">
+            <summary>
+            Gets information about recent media posted to a subscription to a geographic area identified by a center 
+            latitude and longitude and a radius extending from the center.
+            </summary>
+            <param name="id">A (potentially empty) ID of a particular configuration for this WebHook.</param>
+            <param name="geoId">The geo ID is the <see cref="P:Microsoft.AspNet.WebHooks.InstagramSubscription.ObjectId"/> from a geographic subscription, for example '<c>12980749</c>'.</param>
+            <returns>A <see cref="T:Newtonsoft.Json.Linq.JArray"/> containing information about available media posted within the geographic area
+            of the subscription.</returns>
+        </member>
+        <member name="M:Microsoft.AspNet.WebHooks.InstagramWebHookClient.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AspNet.WebHooks.InstagramWebHookClient.Dispose(System.Boolean)">
+            <summary>
+            Releases the unmanaged resources and optionally releases the managed resources.
+            </summary>
+            <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <b>false</b> to release only unmanaged resources.</param>
+        </member>
+        <member name="M:Microsoft.AspNet.WebHooks.InstagramWebHookClient.GetClientConfig(System.String)">
+            <summary>
+            Gets the Client ID and Client Secret for the Instagram Client application.
+            </summary>
+            <param name="id">A (potentially empty) ID of a particular configuration for this WebHook.</param>
+            <returns>A <see cref="T:System.Tuple`2"/> containing the Client ID and Client Secret.</returns>
+        </member>
+        <member name="T:Microsoft.AspNet.WebHooks.InstagramWebHookReceiver">
+            <summary>
+            Provides an <see cref="T:Microsoft.AspNet.WebHooks.IWebHookReceiver"/> implementation which supports WebHooks generated by Instagram. 
+            Set the '<c>MS_WebHookReceiverSecret_Instagram</c>' application setting to the application secrets, optionally using IDs
+            to differentiate between multiple WebHooks, for example '<c>secret0, id1=secret1, id2=secret2</c>'.
+            The corresponding WebHook URI is of the form '<c>https://&lt;host&gt;/api/webhooks/incoming/instagram/{id}</c>'.
+            For details about Instagram WebHooks, see <c>https://instagram.com/developer/realtime/</c>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNet.WebHooks.InstagramWebHookReceiver.Name">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AspNet.WebHooks.InstagramWebHookReceiver.ReceiveAsync(System.String,System.Web.Http.Controllers.HttpRequestContext,System.Net.Http.HttpRequestMessage)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AspNet.WebHooks.InstagramWebHookReceiver.VerifySignature(System.String,System.Net.Http.HttpRequestMessage)">
+            <summary>
+            Verifies that the signature header matches that of the actual body.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNet.WebHooks.InstagramWebHookReceiver.WebHookVerification(System.String,System.Net.Http.HttpRequestMessage)">
+            <summary>
+            Creates a response to a WebHook verification GET request.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNet.WebHooks.InstagramWebHookReceiver.GetActions(Newtonsoft.Json.Linq.JArray,System.Net.Http.HttpRequestMessage)">
+            <summary>
+            Gets the notification actions form the given <paramref name="data"/>.
+            </summary>
+            <param name="data">The request body.</param>
+            <param name="request">The current <see cref="T:System.Net.Http.HttpRequestMessage"/>.</param>
+            <returns>A collection of actions.</returns>
+        </member>
+    </members>
+</doc>

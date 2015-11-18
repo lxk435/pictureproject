@@ -24,7 +24,7 @@ namespace PictureProject.Controllers
             InstagramWebHookClient client = Dependencies.Client;
 
             // Subscribe to a geo location, in this case within 5000 meters of Times Square in NY
-            var sub = await client.SubscribeAsync(string.Empty, Url, 40.757626, -73.985794, 5000);
+            var sub = await client.SubscribeAsync(string.Empty, Url, 51.455117, -2.584271, 5000);
 
             return Ok(sub);
         }

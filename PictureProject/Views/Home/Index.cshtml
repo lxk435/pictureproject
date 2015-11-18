@@ -1,9 +1,7 @@
 ﻿@model PictureProject.Models.ViewModels.HomeViewModel
 
-<div class="jumbotron">
+<div class="page-header">
     <h1>@Model.Title</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
 </div>
 
 @if (Model.HasImages)
@@ -12,7 +10,7 @@
         @foreach (var image in Model.Images)
         {
             <div class="col-md-4">
-                <a href="@image.Address"><img src="@image.Address" width="@image.Width" height="@image.Height" /></a>
+                <a href="@image.Address"><img src="@image.Address" class="img-thumbnail" /></a>
             </div>
         }
     </div>

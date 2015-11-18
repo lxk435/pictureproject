@@ -81,3 +81,5 @@ c:\users\lkey\documents\visual studio 2015\Projects\PictureProject\PictureProjec
 c:\users\lkey\documents\visual studio 2015\Projects\PictureProject\PictureProject\obj\Debug\PictureProject.csprojResolveAssemblyReference.cache
 c:\users\lkey\documents\visual studio 2015\Projects\PictureProject\PictureProject\obj\Debug\PictureProject.dll
 c:\users\lkey\documents\visual studio 2015\Projects\PictureProject\PictureProject\obj\Debug\PictureProject.pdb
+C:\Users\lkey\Documents\Visual Studio 2015\Projects\PictureProject\PictureProject\obj\Debug\PictureProject.Migrations.Changestring.resources
+C:\Users\lkey\Documents\Visual Studio 2015\Projects\PictureProject\PictureProject\obj\Debug\PictureProject.csproj.GenerateResource.Cache

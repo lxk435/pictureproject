@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web; 
+using System.Web;
 using System.Threading.Tasks;
 using System.Web.Http.Description;
-using Microsoft.AspNet.WebHooks; 
+using Microsoft.AspNet.WebHooks;
 using Newtonsoft.Json.Linq;
 using PictureProject.Models;
-
+using log4net;
 
 namespace PictureProject.Instagram
 {
     public class InstagramWebHookHandler : WebHookHandler
     {
         private PictureProjectContext db = new PictureProjectContext();
+        private static readonly ILog logger = LogManager.GetLogger(typeof(InstagramWebHookHandler));
 
         public InstagramWebHookHandler()
         {
@@ -29,10 +30,14 @@ namespace PictureProject.Instagram
             var notifications = context.GetDataOrDefault<IEnumerable<InstagramNotification>>();
             foreach (var notification in notifications)
             {
+                logger.Debug("Received notification: " + notification.ObjectId);
+
                 // Use WebHook client to get detailed information about the posted media
                 var entries = await client.GetRecentGeoMedia(context.Id, notification.ObjectId);
                 foreach (JToken entry in entries)
                 {
+                    logger.Debug("Object: " + entry.ToString());
+
                     InstagramPost post = entry.ToObject<InstagramPost>();
                     
                     // Image information 
@@ -49,6 +54,7 @@ namespace PictureProject.Instagram
                         
                         SaveImage(InstImage);
 
+                        logger.Debug("Saved image: " + InstImage.Address);
                     }
                 }
             }

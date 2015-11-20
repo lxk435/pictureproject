@@ -15,7 +15,29 @@ namespace PictureProject.Controllers
     public class InstagramSubscriptionController : ApiController
     {
 
-        
+        [Route("subscribe-user")]
+        public async Task<IHttpActionResult> PostSubscribeUser()
+        {
+            // Get our WebHook Client
+            InstagramWebHookClient client = Dependencies.Client;
+
+            // Subscribe to a geo location, in this case within 5000 meters of Times Square in NY
+            var sub = await client.SubscribeAsync(string.Empty, Url);
+
+            return Ok(sub);
+        }
+
+        [Route("subscribe-tag")]
+        public async Task<IHttpActionResult> PostSubscribeTag()
+        {
+            // Get our WebHook Client
+            InstagramWebHookClient client = Dependencies.Client;
+
+            // Subscribe to a geo location, in this case within 5000 meters of Times Square in NY
+            var sub = await client.SubscribeAsync(string.Empty, Url, "#zonebristol");
+
+            return Ok(sub);
+        }
 
         [Route("subscribe")]
         public async Task<IHttpActionResult> PostSubscribe()

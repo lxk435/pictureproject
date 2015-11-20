@@ -7,13 +7,13 @@ namespace PictureProject.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Changestring : IMigrationMetadata
+    public sealed partial class Initialcommit : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Changestring));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initialcommit));
         
         string IMigrationMetadata.Id
         {
-            get { return "201511171755307_Changestring"; }
+            get { return "201511181615179_Initial commit"; }
         }
         
         string IMigrationMetadata.Source
